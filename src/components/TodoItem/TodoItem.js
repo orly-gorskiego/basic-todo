@@ -1,18 +1,26 @@
 import React from 'react';
 import {
-  View, Text, TouchableHighlight, StyleSheet,
+  View, Text, TouchableOpacity, StyleSheet,
 } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'papayawhip', padding: 10,
+    paddingVertical: 15,
+    paddingHorizontal: 10,
+    margin: 2,
+  },
+  containerDone: {
+    backgroundColor: 'gainsboro',
+  },
+  containerUndone: {
+    backgroundColor: 'dodgerblue',
   },
   textDone: {
     color: 'gray',
     textDecorationLine: 'line-through',
   },
   textUndone: {
-    color: 'black',
+    color: 'white',
     textDecorationLine: 'none',
   },
 });
@@ -20,11 +28,11 @@ const styles = StyleSheet.create({
 const TodoItem = ({
   id, text, done, toggleTodo,
 }) => (
-  <View style={styles.container}>
-    <TouchableHighlight onPress={() => toggleTodo(id)}>
+  <TouchableOpacity onPress={() => toggleTodo(id)}>
+    <View style={done ? { ...styles.container, ...styles.containerDone } : { ...styles.container, ...styles.containerUndone }}>
       <Text style={done ? { ...styles.textDone } : { ...styles.textUndone }}>{text}</Text>
-    </TouchableHighlight>
-  </View>
+    </View>
+  </TouchableOpacity>
 )
 
 export default TodoItem
