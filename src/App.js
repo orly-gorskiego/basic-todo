@@ -1,10 +1,31 @@
 import React, { useState } from 'react';
 import {
-  View, Text, FlatList, TextInput,
+  View, FlatList, TextInput, StyleSheet,
 } from 'react-native';
 import uuid from 'react-native-uuid';
 import Header from './components/Header/Header';
 import TodoItem from './components/TodoItem/TodoItem';
+
+const styles = StyleSheet.create({
+  container: {
+    top: 50,
+    backgroundColor: 'aliceblue',
+    flex: 1,
+  },
+  content: {
+    alignItems: 'center',
+    padding: 10,
+  },
+  input: {
+    height: 40,
+    width: 200,
+    backgroundColor: 'white',
+    padding: 10,
+  },
+  list: {
+    padding: 10,
+  },
+});
 
 const App = () => {
   const [todos, setTodos] = useState([]);
@@ -37,16 +58,18 @@ const App = () => {
   }
 
   return (
+    <View style={styles.container}>
       <Header text="Todo App" />
+      <View style={styles.content}>
       <TextInput
-        style={{
-          height: 40, width: 200, backgroundColor: 'white',
-        }}
+          style={styles.input}
         value={inputValue}
         onChangeText={(text) => setInputValue(text)}
         onSubmitEditing={addTodoHandler}
+          placeholder="Add todo"
       />
-      <FlatList style={{ padding: 10 }} data={todos} renderItem={({ item }) => <TodoItem toggleTodo={toggleTodo} {...item} />} />
+        <FlatList style={styles.list} data={todos} renderItem={({ item }) => <TodoItem toggleTodo={toggleTodo} {...item} />} />
+      </View>
     </View>
   )
 };
