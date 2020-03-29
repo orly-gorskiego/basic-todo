@@ -3,7 +3,7 @@ import {
   View, Text, FlatList, TextInput,
 } from 'react-native';
 import uuid from 'react-native-uuid';
-import { replaceAt } from './helpers'
+import Header from './components/Header/Header';
 import TodoItem from './components/TodoItem/TodoItem';
 
 const App = () => {
@@ -37,11 +37,7 @@ const App = () => {
   }
 
   return (
-    <View style={{
-      alignItems: 'center', top: 50, backgroundColor: 'aliceblue', minHeight: 300,
-    }}
-    >
-      <Text>Todo App</Text>
+      <Header text="Todo App" />
       <TextInput
         style={{
           height: 40, width: 200, backgroundColor: 'white',
