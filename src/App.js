@@ -5,6 +5,7 @@ import {
 import uuid from 'react-native-uuid';
 import Header from './components/Header/Header';
 import TodoItem from './components/TodoItem/TodoItem';
+import { sortByDone } from './helpers';
 
 const styles = StyleSheet.create({
   container: {
@@ -32,28 +33,32 @@ const App = () => {
   const [inputValue, setInputValue] = useState('');
 
   const addTodoHandler = () => {
-    setTodos([
+    const newTodos = [
       ...todos,
       {
         id: uuid(),
         text: inputValue,
         done: false,
       },
-    ])
+    ];
 
+    const sortedTodos = newTodos.sort(sortByDone)
+
+    setTodos(sortedTodos)
     setInputValue('')
   }
 
   const toggleTodo = (id) => {
-    const taskIndex = todos.findIndex((todo) => todo.id === id)
-    const task = [...todos][taskIndex]
+    const todo = todos.find((el) => el.id === id)
+    const filteredTodos = todos.filter((el) => el.id !== id)
 
-    const updatedTask = {
-      ...task,
-      done: !task.done,
+    const updatedTodo = {
+      ...todo,
+      done: !todo.done,
     };
 
-    const newTodos = replaceAt([...todos], taskIndex, updatedTask);
+    const newTodos = todo.done ? [updatedTodo, ...filteredTodos] : [...filteredTodos, updatedTodo]
+
     setTodos(newTodos)
   }
 
@@ -61,13 +66,13 @@ const App = () => {
     <View style={styles.container}>
       <Header text="Todo App" />
       <View style={styles.content}>
-      <TextInput
+        <TextInput
           style={styles.input}
-        value={inputValue}
-        onChangeText={(text) => setInputValue(text)}
-        onSubmitEditing={addTodoHandler}
+          value={inputValue}
+          onChangeText={(text) => setInputValue(text)}
+          onSubmitEditing={addTodoHandler}
           placeholder="Add todo"
-      />
+        />
         <FlatList style={styles.list} data={todos} renderItem={({ item }) => <TodoItem toggleTodo={toggleTodo} {...item} />} />
       </View>
     </View>
