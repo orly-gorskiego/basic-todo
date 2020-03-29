@@ -63,6 +63,12 @@ const App = () => {
     setTodos(newTodos)
   }
 
+  const removeTodo = (id) => {
+    const filteredTodos = todos.filter((el) => el.id !== id)
+
+    setTodos(filteredTodos)
+  }
+
   return (
     <View style={styles.container}>
       <Header text="Todo App" />
@@ -74,7 +80,7 @@ const App = () => {
         placeholder="Add todo"
       />
       <View style={styles.content}>
-        <FlatList style={styles.list} data={todos} renderItem={({ item }) => <TodoItem toggleTodo={toggleTodo} {...item} />} />
+        <FlatList style={styles.list} data={todos} renderItem={({ item }) => <TodoItem removeTodo={removeTodo} toggleTodo={toggleTodo} {...item} />} />
       </View>
     </View>
   )
