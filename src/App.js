@@ -14,17 +14,18 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   content: {
-    alignItems: 'center',
     padding: 10,
   },
   input: {
-    height: 40,
-    width: 200,
+    height: 60,
     backgroundColor: 'white',
     padding: 10,
+    margin: 10,
+    borderWidth: 1,
+    borderColor: 'gainsboro',
   },
   list: {
-    padding: 10,
+    paddingHorizontal: 30,
   },
 });
 
@@ -65,14 +66,14 @@ const App = () => {
   return (
     <View style={styles.container}>
       <Header text="Todo App" />
+      <TextInput
+        style={styles.input}
+        value={inputValue}
+        onChangeText={(text) => setInputValue(text)}
+        onSubmitEditing={addTodoHandler}
+        placeholder="Add todo"
+      />
       <View style={styles.content}>
-        <TextInput
-          style={styles.input}
-          value={inputValue}
-          onChangeText={(text) => setInputValue(text)}
-          onSubmitEditing={addTodoHandler}
-          placeholder="Add todo"
-        />
         <FlatList style={styles.list} data={todos} renderItem={({ item }) => <TodoItem toggleTodo={toggleTodo} {...item} />} />
       </View>
     </View>
